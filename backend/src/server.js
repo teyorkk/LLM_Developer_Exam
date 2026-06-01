@@ -6,6 +6,7 @@ const cors = require("cors");
 const prisma = require("./lib/prisma");
 const authRoutes = require("./routes/auth");
 const diaryRoutes = require("./routes/diaries");
+const reportRoutes = require("./routes/reports");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/diaries", diaryRoutes);
+app.use("/reports", reportRoutes);
 
 app.use((err, _req, res, _next) => {
 	const status = err.statusCode || err.status || 500;
