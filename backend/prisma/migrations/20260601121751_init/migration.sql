@@ -1,0 +1,46 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[User] (
+    [id] NVARCHAR(1000) NOT NULL,
+    [email] NVARCHAR(1000) NOT NULL,
+    [password] NVARCHAR(1000) NOT NULL,
+    [name] NVARCHAR(1000),
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [User_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [updatedAt] DATETIME2 NOT NULL,
+    CONSTRAINT [User_pkey] PRIMARY KEY CLUSTERED ([id]),
+    CONSTRAINT [User_email_key] UNIQUE NONCLUSTERED ([email])
+);
+
+-- CreateTable
+CREATE TABLE [dbo].[Diary] (
+    [id] NVARCHAR(1000) NOT NULL,
+    [title] NVARCHAR(1000) NOT NULL,
+    [content] NVARCHAR(1000) NOT NULL,
+    [entryDate] DATETIME2 NOT NULL CONSTRAINT [Diary_entryDate_df] DEFAULT CURRENT_TIMESTAMP,
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [Diary_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [updatedAt] DATETIME2 NOT NULL,
+    [userId] NVARCHAR(1000) NOT NULL,
+    CONSTRAINT [Diary_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+-- CreateIndex
+CREATE NONCLUSTERED INDEX [Diary_userId_idx] ON [dbo].[Diary]([userId]);
+
+-- AddForeignKey
+ALTER TABLE [dbo].[Diary] ADD CONSTRAINT [Diary_userId_fkey] FOREIGN KEY ([userId]) REFERENCES [dbo].[User]([id]) ON DELETE CASCADE ON UPDATE CASCADE;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
