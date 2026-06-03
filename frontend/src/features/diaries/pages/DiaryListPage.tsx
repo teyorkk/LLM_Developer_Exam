@@ -2,7 +2,6 @@ import { Alert, Card } from 'antd'
 import { useState } from 'react'
 import { DiaryListHeader, DiaryTable } from '@/features/diaries/components/DiaryTable'
 import { useDeleteDiary, useDiaries } from '@/features/diaries/hooks/useDiaries'
-import { ApiError } from '@/shared/types/api'
 
 export function DiaryListPage() {
   const { data, isLoading, error } = useDiaries()
@@ -21,7 +20,7 @@ export function DiaryListPage() {
   return (
     <Card>
       <DiaryListHeader />
-      {error instanceof ApiError && (
+      {error instanceof Error && (
         <Alert type="error" message={error.message} style={{ marginBottom: 16 }} />
       )}
       <DiaryTable

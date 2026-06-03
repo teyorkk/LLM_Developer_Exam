@@ -8,7 +8,6 @@ import {
   type ReactNode,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { setUnauthorizedHandler } from '@/shared/api/client'
 import {
   clearSession,
   getStoredToken,
@@ -46,10 +45,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
     navigate('/login')
   }, [navigate])
-
-  useEffect(() => {
-    setUnauthorizedHandler(logout)
-  }, [logout])
 
   const setSession = useCallback((nextToken: string, nextUser: User) => {
     storeSession(nextToken, nextUser)

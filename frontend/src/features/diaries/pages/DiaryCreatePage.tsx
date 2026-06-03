@@ -2,7 +2,6 @@ import { Alert, Card, Typography } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { DiaryForm } from '@/features/diaries/components/DiaryForm'
 import { useCreateDiary } from '@/features/diaries/hooks/useDiaries'
-import { ApiError } from '@/shared/types/api'
 
 const { Title } = Typography
 
@@ -13,7 +12,7 @@ export function DiaryCreatePage() {
   return (
     <Card>
       <Title level={3}>New diary entry</Title>
-      {createDiary.error instanceof ApiError && (
+      {createDiary.error instanceof Error && (
         <Alert type="error" message={createDiary.error.message} style={{ marginBottom: 16 }} />
       )}
       <DiaryForm

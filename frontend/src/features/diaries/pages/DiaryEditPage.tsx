@@ -3,7 +3,6 @@ import { ArrowLeft } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { DiaryForm } from '@/features/diaries/components/DiaryForm'
 import { useDiary, useUpdateDiary } from '@/features/diaries/hooks/useDiaries'
-import { ApiError } from '@/shared/types/api'
 import { DiaryDetailLoading } from '@/features/diaries/components/DiaryDetail'
 
 const { Title } = Typography
@@ -18,7 +17,7 @@ export function DiaryEditPage() {
     return <DiaryDetailLoading />
   }
 
-  if (error instanceof ApiError) {
+  if (error instanceof Error) {
     return <Alert type="error" message={error.message} />
   }
 
@@ -37,7 +36,7 @@ export function DiaryEditPage() {
             Edit diary
           </Title>
         </Space>
-        {updateDiary.error instanceof ApiError && (
+        {updateDiary.error instanceof Error && (
           <Alert type="error" message={updateDiary.error.message} />
         )}
         <DiaryForm

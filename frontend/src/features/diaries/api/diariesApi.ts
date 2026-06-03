@@ -1,4 +1,3 @@
-import { apiClient } from '@/shared/api/client'
 import type {
   CreateDiaryRequest,
   DeleteDiaryResponse,
@@ -7,19 +6,49 @@ import type {
   UpdateDiaryRequest,
 } from '@/features/diaries/types'
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL ?? ''
+
+async function request<T>(
+  path: string,
+  token: string,
+  options: RequestInit = {},
+): Promise<T> {
+  const response = await fetch(`${baseUrl}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    },
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(typeof data.message === 'string' ? data.message : 'Request failed')
+  }
+
+  return data as T
+}
+
 export const diariesApi = {
-  list: (token: string) =>
-    apiClient.get<DiariesListResponse>('/diaries', token),
+  list: (token: string) => request<DiariesListResponse>('/diaries', token),
 
   get: (id: string, token: string) =>
-    apiClient.get<DiaryResponse>(`/diaries/${id}`, token),
+    request<DiaryResponse>(`/diaries/${id}`, token),
 
   create: (payload: CreateDiaryRequest, token: string) =>
-    apiClient.post<DiaryResponse>('/diaries', payload, token),
+    request<DiaryResponse>('/diaries', token, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
 
   update: (id: string, payload: UpdateDiaryRequest, token: string) =>
-    apiClient.put<DiaryResponse>(`/diaries/${id}`, payload, token),
+    request<DiaryResponse>(`/diaries/${id}`, token, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
 
   remove: (id: string, token: string) =>
-    apiClient.delete<DeleteDiaryResponse>(`/diaries/${id}`, token),
+    request<DeleteDiaryResponse>(`/diaries/${id}`, token, { method: 'DELETE' }),
 }
