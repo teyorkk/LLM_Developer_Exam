@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { LoginStubPage } from '@/features/auth/pages/LoginStubPage'
+import { LoginPage } from '@/features/auth/pages/LoginPage'
+import { RegisterPage } from '@/features/auth/pages/RegisterPage'
 import { DiariesStubPage } from '@/features/diaries/pages/DiariesStubPage'
 import { ReportsStubPage } from '@/features/reports/pages/ReportsStubPage'
 import { useAuth } from '@/shared/auth/AuthContext'
@@ -20,7 +21,8 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<RootRedirect />} />
-      <Route path="/login" element={<LoginStubPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/diaries" element={<DiariesStubPage />} />
