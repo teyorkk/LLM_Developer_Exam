@@ -1,3 +1,10 @@
+const {
+  normalizeEmail,
+  normalizePassword,
+  normalizeString,
+  requireBody,
+} = require("../validators/requestValidators");
+
 class RegisterUserDTO {
   constructor(email, password, name) {
     this.email = email;
@@ -6,15 +13,13 @@ class RegisterUserDTO {
   }
 
   static from(body = {}) {
-    const { email, password, name } = body;
+    const { email, password, name } = requireBody(body);
 
-    if (!email || !password) {
-      const error = new Error("Email and password are required");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    return new RegisterUserDTO(email, password, name || null);
+    return new RegisterUserDTO(
+      normalizeEmail(email),
+      normalizePassword(password),
+      normalizeString(name, "Name") || null,
+    );
   }
 }
 
@@ -25,15 +30,9 @@ class LoginUserDTO {
   }
 
   static from(body = {}) {
-    const { email, password } = body;
+    const { email, password } = requireBody(body);
 
-    if (!email || !password) {
-      const error = new Error("Email and password are required");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    return new LoginUserDTO(email, password);
+    return new LoginUserDTO(normalizeEmail(email), normalizePassword(password));
   }
 }
 

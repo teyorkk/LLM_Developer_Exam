@@ -1,3 +1,9 @@
+const {
+  normalizeOptionalDate,
+  normalizeString,
+  requireBody,
+} = require("../validators/requestValidators");
+
 class CreateDiaryDTO {
   constructor(title, content, entryDate) {
     this.title = title;
@@ -6,27 +12,13 @@ class CreateDiaryDTO {
   }
 
   static from(body = {}) {
-    const { title, content, entryDate } = body;
+    const { title, content, entryDate } = requireBody(body);
 
-    if (!title || !content) {
-      const error = new Error("Title and content are required");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    let parsedEntryDate;
-
-    if (entryDate) {
-      parsedEntryDate = new Date(entryDate);
-
-      if (Number.isNaN(parsedEntryDate.getTime())) {
-        const error = new Error("Invalid entryDate value");
-        error.statusCode = 400;
-        throw error;
-      }
-    }
-
-    return new CreateDiaryDTO(title, content, parsedEntryDate);
+    return new CreateDiaryDTO(
+      normalizeString(title, "Title", { required: true }),
+      normalizeString(content, "Content", { required: true }),
+      normalizeOptionalDate(entryDate, "entryDate"),
+    );
   }
 }
 
@@ -38,21 +30,13 @@ class UpdateDiaryDTO {
   }
 
   static from(body = {}) {
-    const { title, content, entryDate } = body;
+    const { title, content, entryDate } = requireBody(body);
 
-    if (entryDate) {
-      const parsedEntryDate = new Date(entryDate);
-
-      if (Number.isNaN(parsedEntryDate.getTime())) {
-        const error = new Error("Invalid entryDate value");
-        error.statusCode = 400;
-        throw error;
-      }
-
-      return new UpdateDiaryDTO(title, content, parsedEntryDate);
-    }
-
-    return new UpdateDiaryDTO(title, content, undefined);
+    return new UpdateDiaryDTO(
+      normalizeString(title, "Title"),
+      normalizeString(content, "Content"),
+      normalizeOptionalDate(entryDate, "entryDate"),
+    );
   }
 }
 
