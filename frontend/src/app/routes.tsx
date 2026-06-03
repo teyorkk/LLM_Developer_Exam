@@ -5,7 +5,7 @@ import { DiaryCreatePage } from '@/features/diaries/pages/DiaryCreatePage'
 import { DiaryDetailPage } from '@/features/diaries/pages/DiaryDetailPage'
 import { DiaryEditPage } from '@/features/diaries/pages/DiaryEditPage'
 import { DiaryListPage } from '@/features/diaries/pages/DiaryListPage'
-import { ReportsStubPage } from '@/features/reports/pages/ReportsStubPage'
+import { ReportPage } from '@/features/reports/pages/ReportPage'
 import { useAuth } from '@/shared/auth/AuthContext'
 import { AppLayout } from '@/shared/components/AppLayout'
 import { ProtectedRoute } from '@/shared/components/ProtectedRoute'
@@ -32,7 +32,7 @@ export function AppRoutes() {
           <Route path="/diaries/new" element={<DiaryCreatePage />} />
           <Route path="/diaries/:id" element={<DiaryDetailPage />} />
           <Route path="/diaries/:id/edit" element={<DiaryEditPage />} />
-          <Route path="/reports" element={<ReportsStubPage />} />
+          <Route path="/reports" element={<ReportPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
