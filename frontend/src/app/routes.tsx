@@ -1,7 +1,10 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
 import { RegisterPage } from '@/features/auth/pages/RegisterPage'
-import { DiariesStubPage } from '@/features/diaries/pages/DiariesStubPage'
+import { DiaryCreatePage } from '@/features/diaries/pages/DiaryCreatePage'
+import { DiaryDetailPage } from '@/features/diaries/pages/DiaryDetailPage'
+import { DiaryEditPage } from '@/features/diaries/pages/DiaryEditPage'
+import { DiaryListPage } from '@/features/diaries/pages/DiaryListPage'
 import { ReportsStubPage } from '@/features/reports/pages/ReportsStubPage'
 import { useAuth } from '@/shared/auth/AuthContext'
 import { AppLayout } from '@/shared/components/AppLayout'
@@ -25,7 +28,10 @@ export function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
-          <Route path="/diaries" element={<DiariesStubPage />} />
+          <Route path="/diaries" element={<DiaryListPage />} />
+          <Route path="/diaries/new" element={<DiaryCreatePage />} />
+          <Route path="/diaries/:id" element={<DiaryDetailPage />} />
+          <Route path="/diaries/:id/edit" element={<DiaryEditPage />} />
           <Route path="/reports" element={<ReportsStubPage />} />
         </Route>
       </Route>
