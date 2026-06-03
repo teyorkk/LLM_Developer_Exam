@@ -3,7 +3,6 @@ import { ArrowLeft, Pencil } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 import { DiaryDetail, DiaryDetailLoading } from '@/features/diaries/components/DiaryDetail'
 import { useDiary } from '@/features/diaries/hooks/useDiaries'
-import { ApiError } from '@/shared/types/api'
 
 const { Title } = Typography
 
@@ -15,7 +14,7 @@ export function DiaryDetailPage() {
     return <DiaryDetailLoading />
   }
 
-  if (error instanceof ApiError) {
+  if (error instanceof Error) {
     return <Alert type="error" message={error.message} />
   }
 

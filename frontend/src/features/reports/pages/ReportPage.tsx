@@ -5,7 +5,6 @@ import { DateRangeFilter } from '@/features/reports/components/DateRangeFilter'
 import { RecentDiariesTable } from '@/features/reports/components/RecentDiariesTable'
 import { ReportSummary } from '@/features/reports/components/ReportSummary'
 import { useSimpleReport } from '@/features/reports/hooks/useReport'
-import { ApiError } from '@/shared/types/api'
 
 const { Title, Text } = Typography
 
@@ -28,7 +27,7 @@ export function ReportPage() {
 
         <DateRangeFilter from={from} to={to} onChange={handleDateChange} />
 
-        {error instanceof ApiError && <Alert type="error" message={error.message} />}
+        {error instanceof Error && <Alert type="error" message={error.message} />}
 
         {isLoading ? (
           <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}>

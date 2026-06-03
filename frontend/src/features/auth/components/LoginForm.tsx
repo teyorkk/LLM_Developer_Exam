@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { authApi } from '@/features/auth/api/authApi'
 import type { LoginRequest } from '@/features/auth/types'
 import { useAuth } from '@/shared/auth/AuthContext'
-import { ApiError } from '@/shared/types/api'
 
 const { Title, Text } = Typography
 
@@ -20,7 +19,7 @@ export function LoginForm() {
       navigate('/diaries')
     } catch (error) {
       const message =
-        error instanceof ApiError ? error.message : 'Login failed'
+        error instanceof Error ? error.message : 'Login failed'
       form.setFields([{ name: 'password', errors: [message] }])
     }
   }
