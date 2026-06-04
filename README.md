@@ -6,6 +6,9 @@
 4. on cli change directory to backend then npx prisma migrate deploy on backend directory
 5. on cli npm run dev/ pnpm dev for both front end and backend directory
 6. frontend runs on http://localhost:5137 while backend runs on http://localhost:5000
+7. First create an account then login
+8. after logging in you will see the interface where you can log a diary or note
+9. after that it is saved and you can click the report page whereas you can see the summary of your diaries
 
 ## Challenges encountered
 
